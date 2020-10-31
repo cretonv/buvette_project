@@ -1,1 +1,1 @@
-# buvette_project
+# Buvette Project
