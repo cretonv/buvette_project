@@ -41,7 +41,6 @@
     function increaseChronoValue() {
         chronoValueInt += 1;
         chronoValue.innerHTML = (chronoValueInt < 10 ? '0' : '') + chronoValueInt.toString();
-        console.log(chronoValue.innerHTML);
         /*On test si la valeur après la virgule est égale à 60 pour augmenter la valeur des secondes de 1*/
         if(chronoValueInt === 60) {
             chronoValueInt = 0;
