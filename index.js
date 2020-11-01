@@ -27,6 +27,15 @@
      */
     let playerMarquer = new Image();
     playerMarquer.src = './assets/images/vinc-projet.png';
+    let alcoholCounter = 0;
+    let alcoholTab = [];
+    let alcoholType = [
+        {
+            "name": "Captain",
+            "url": "captain.png",
+            "speed": 4
+        }
+    ]
 
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
@@ -63,7 +72,12 @@
     function launchGame() {
         gameRunning = true;
         ctx.drawImage(playerMarquer, (window.event.clientX - 57.5), (event.pageY - 57.5), 115, 115);
+        while (alcoholCounter < 4){
+            createNewBottleElement(alcoholCounter)
+            alcoholCounter ++;
+        }
         launchChrono();
+        launchBottleAnimation();
     }
 
     /**
@@ -111,8 +125,43 @@
         }
 
         if(gameRunning) {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
+            //ctx.clearRect(0,0,canvas.width,canvas.height);
             ctx.drawImage(playerMarquer, (event.pageX - 57.5), (event.pageY - 57.5), 115, 115);
         }
     }
+
+    /**
+     * Permet de créer une nouvelle image et de l'insérr dans à l'index passé en paramètre
+     * @param index
+     */
+    function createNewBottleElement(index) {
+        alcoholTab[index] = new Image()
+        alcoholTab[index].src = "./assets/images/" + alcoholType[0].url
+        alcoholTab[index].setAttribute("x", (Math.round(Math.random() * canvas.width - 57.5)))
+        alcoholTab[index].setAttribute("y", (Math.round(Math.random() * canvas.height - 57.5)))
+        alcoholTab[index].setAttribute("speedX", alcoholType[0].speed)
+        alcoholTab[index].setAttribute("speedY", alcoholType[0].speed)
+        ctx.drawImage(alcoholTab[index], alcoholTab[index].getAttribute("x"), alcoholTab[index].getAttribute("y"), 115, 115)
+    }
+
+    /**
+     * Fonction gérant l'animation de toutes nos bouteilles
+     */
+    function launchBottleAnimation() {
+        for(let i = 0; i < alcoholTab.length; i ++) {
+            alcoholTab[i].setAttribute('x', (parseInt(alcoholTab[i].getAttribute('x')) + parseInt(alcoholTab[i].getAttribute('speedX'))))
+            alcoholTab[i].setAttribute('y', (parseInt(alcoholTab[i].getAttribute('y')) + parseInt(alcoholTab[i].getAttribute('speedY'))))
+
+            /* Gestion des exceptions lorsque qu'une des images arrive sur le bord de l'écran */
+            if((parseInt(alcoholTab[i].getAttribute('x')) >= canvas.width -57.5) || (parseInt(alcoholTab[i].getAttribute('x')) <= -57.5))  {
+                alcoholTab[i].setAttribute('speedX', (parseInt(alcoholTab[i].getAttribute('speedX')) * -1));
+            } else if((parseInt(alcoholTab[i].getAttribute('y')) >= canvas.height - 115) || (parseInt(alcoholTab[i].getAttribute('y')) <= 0))  {
+                alcoholTab[i].setAttribute('speedY', (parseInt(alcoholTab[i].getAttribute('speedY')) * -1));
+            }
+
+            ctx.drawImage(alcoholTab[i], (alcoholTab[i].getAttribute('x')), (alcoholTab[i].getAttribute('y')), 115, 115);
+        }
+        timeoutID = window.setTimeout(launchBottleAnimation, 10);
+    }
+
 })();
