@@ -2,6 +2,18 @@
     let canvas = document.getElementById('game'),
         ctx = canvas.getContext('2d');
 
+    /*--------------------------------------------------------*/
+    /* PARTIE VARIABLES */
+    /*--------------------------------------------------------*/
+
+    /**
+     * Variables générales
+     */
+    let gameRunning = false;    // Variable permettant de savoir si le jeu est lancé
+
+    /**
+     * Variables utilisés pour le fonctionnement du chronomètre
+     */
     let chrono = document.getElementById('chrono');
     let chronoValue = chrono.querySelector('.chrono-value');
     let chronoValueSeconds = chrono.querySelector('.chrono-seconds-value');
@@ -10,14 +22,23 @@
     let chronoRun = false;
     let timeoutID;
 
+    /**
+     * Variables utilisés pour l'affichage des éléments sur le canvas (tout les différents 'marqueurs'
+     */
     let playerMarquer = new Image();
-    /* Variable permettant de savoir si le jeu est lancé */
-    let gameRunning = false;
 
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
+
+    /**
+     * Ajout des écouteurs d'évènements faisant fonctionner le jeu
+     */
     window.addEventListener('click', launchGame, false);
     document.onmousemove = handleMouseMove;
+
+    /*--------------------------------------------------------*/
+    /* PARTIE FONCTIONS */
+    /*--------------------------------------------------------*/
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -39,10 +60,17 @@
         playerMarquer.src = './assets/images/vinc-projet.png';
     }
 
+    /**
+     * Fonction lancant le jeu et tout appellant toutes les fonctions nécéssaires
+     */
     function launchGame() {
         gameRunning = true;
         launchChrono();
     }
+
+    /**
+     * Fonctions utiles au fonctionnement du chrono
+     */
     function launchChrono() {
         timeoutID = window.setTimeout(increaseChronoValue, 10);
         window.removeEventListener('click', launchGame, false);
@@ -65,7 +93,6 @@
      * La fonction suivante va nous permettre de traquer le marqueur du joeur et afficher le marqueur en fonction de la nouvelle position
      * @param event
      */
-
     function handleMouseMove(event) {
         let eventDoc, doc, body;
 
