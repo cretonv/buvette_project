@@ -26,6 +26,7 @@
      * Variables utilisés pour l'affichage des éléments sur le canvas (tout les différents 'marqueurs'
      */
     let playerMarquer = new Image();
+    playerMarquer.src = './assets/images/vinc-projet.png';
 
     // resize the canvas to fill browser window dynamically
     window.addEventListener('resize', resizeCanvas, false);
@@ -54,10 +55,6 @@
 
     function drawStuff() {
         // do your drawing stuff here
-        playerMarquer.onload = () => {
-            ctx.drawImage(playerMarquer, 0, 0, 115, 115);
-        }
-        playerMarquer.src = './assets/images/vinc-projet.png';
     }
 
     /**
@@ -65,6 +62,7 @@
      */
     function launchGame() {
         gameRunning = true;
+        ctx.drawImage(playerMarquer, (window.event.clientX - 57.5), (event.pageY - 57.5), 115, 115);
         launchChrono();
     }
 
