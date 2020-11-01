@@ -113,7 +113,8 @@
         }
 
         if(gameRunning) {
-            ctx.drawImage(playerMarquer, event.pageX, event.pageY, 115, 115);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.drawImage(playerMarquer, (event.pageX - 57.5), (event.pageY - 57.5), 115, 115);
         }
     }
 })();
